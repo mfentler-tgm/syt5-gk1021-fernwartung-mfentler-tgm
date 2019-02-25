@@ -45,6 +45,43 @@ ssh -i .ssh/key_rsa <user>@<server-ip>
 ## Aufgabe 2 - SSH Tunnel
 _"TightVNC is a connection system that allows you to use your keyboard and mouse to interact with a graphical desktop environment on a remote server. It makes managing files, software, and settings on a remote server easier for users who are not yet comfortable with the command line."_ - [2]
 
+### VNC - [2]
+Auf dem Server muss nun VNC installiert werden. Der VNC Server läuft standardmäßig auf Port 5090 + X.  
+X ... Connection  
+
+-> Erste Connection :5091  
+Zweite :5092
+```bash
+sudo apt-get update
+sudo apt install xfce4 xfce4-goodies tightvncserver
+```
+```bash
+vncserver
+```
+Nun wird man nach einem Passwort gefragt. ReadOnly User Passwort brauchen wir nicht.
+
+Anschließend wird der VNC Server noch konfiguriert. Dazu muss die laufende Insatz gekillt werden und ein Backup des Servers erstellt werden.  
+```bash 
+vncserver -kill :1
+```
+Jetzt wird ein Startup File erstellt, dass immer ausgeführt werden soll wenn der Server startet.  
+```bash
+nano ~/.vnc/xstartup
+
+//Inhalt
+#!/bin/bash
+xrdb $HOME/.Xresources
+startxfce4 &
+```
+Die Berechtigungen des Servers auf dieses File werden nun noch verändert.
+```bash
+sudo chmod +x ~/.vnc/xstartup
+```
+
+Nun kann der Server wieder gestartet werden.
+```bash
+vncserver
+```
 ### Putty
 #### Key umwandeln
 Um sich mit Putty über den SSH-Tunnel mit dem vorher erstellten Key zu verbinden muss dieser erst in einen "Putty-Key" umgewandelt werden. [3]  
@@ -52,7 +89,7 @@ Dazu verwendet man die Software __Puttygen__, die bei der Installation von Putty
 Dort: _"File/Load Privat Key/Save Privat Key"_. Am besten direkt als __id_rsa.ppk__ abspeichern.  
 
 Dieser Key wird nun in Putty als Parameter für die Authentifizierung hinzugefügt. Dazu unter SSH/Auth das File auswählen.  
-![Key-Auth](puttyKey.png)
+![Key-Auth](puttyKey.PNG)
 
 ## Quellen
 [1] - https://www.thomas-krenn.com/de/wiki/OpenSSH_Public_Key_Authentifizierung_unter_Ubuntu  
