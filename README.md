@@ -46,10 +46,10 @@ ssh -i .ssh/key_rsa <user>@<server-ip>
 _"TightVNC is a connection system that allows you to use your keyboard and mouse to interact with a graphical desktop environment on a remote server. It makes managing files, software, and settings on a remote server easier for users who are not yet comfortable with the command line."_ - [2]
 
 ### VNC - [2]
-Auf dem Server muss nun VNC installiert werden. Der VNC Server läuft standardmäßig auf Port 5090 + X.  
+Auf dem Server muss nun VNC installiert werden. Der VNC Server läuft standardmäßig auf Port 5900 + X.  
 X ... Connection  
 
--> Erste Connection :5091  
+-> Erste Connection :5901
 Zweite :5092
 ```bash
 sudo apt-get update
@@ -90,6 +90,15 @@ Dort: _"File/Load Privat Key/Save Privat Key"_. Am besten direkt als __id_rsa.pp
 
 Dieser Key wird nun in Putty als Parameter für die Authentifizierung hinzugefügt. Dazu unter SSH/Auth das File auswählen.  
 ![Key-Auth](puttyKey.PNG)
+
+#### Tunnel Einstellung
+In Putty lässt sich auch ein SSH-Tunnel einstellen. Dazu unter SSH/Tunnels das Port Forwarding eintragen. Anschließend ist der Server über Port 9090 erreichbar.  
+![SSHTunnel](SSHTunnel.PNG)
+
+### VNC-Viewer
+Um eine grafische Benutzeroberfläche vom Server zu bekommen können jetzt zwei Anwendungen verwendet werden. _VNC-Viewer_ oder _TightVNC_.  
+
+Dort wählt man einfach als Verbindung __localhost:\<vorherDefiniert>__
 
 ## Quellen
 [1] - https://www.thomas-krenn.com/de/wiki/OpenSSH_Public_Key_Authentifizierung_unter_Ubuntu  
